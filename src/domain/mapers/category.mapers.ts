@@ -1,6 +1,6 @@
 import { CategoryEntity } from "../entities/category.entity";
 
-export class categoryMaper{
+export class CategoryMaper{
     static fromEntity(object: {[Key:string]: any}):CategoryEntity{
         const {id, name, description} = object;
         if(!name) throw Error('')
