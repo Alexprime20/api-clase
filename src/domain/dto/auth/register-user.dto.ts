@@ -9,13 +9,13 @@ export class UserRegisterDto {
         
     ) {}
 
-    static Register ( object:{[Key:string]:any}): [string?, UserRegisterDto?]{
+    static register ( object:{[Key:string]:any}): [string?, UserRegisterDto?]{
         const {name, email,password}=object;
         if (!name) return["name is required", undefined];
         if (!email) return["email is required", undefined];
         if (!password) return ["password is required", undefined];
 
-        return [undefined, new UserRegisterDto(name, password, email)]
+        return [undefined, new UserRegisterDto(name, email, password)]
     }
         
 }

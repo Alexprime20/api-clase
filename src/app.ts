@@ -1,7 +1,7 @@
 import { mongodb } from "../src/data/mongodb/database";
 import { Server } from "./presentation/server"; 
 
-(() =>{
+(async() =>{
     main();
 })();
 

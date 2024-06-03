@@ -21,6 +21,8 @@ export class CategoryController {
       const id = req.params.id
       if(!Validators.validationMongoId(id)) throw Error('mongo id is not valid')
       const [error, updateCategoryDto] = UpdateCategoryDto.update(req.body)
+      if( error ) return res.status(400).json({error});
+      
       this.categoryService.update(updateCategoryDto!, id!)
       .then(category => res.json(category))
       .catch(error => res.status(500).json(error))
@@ -37,8 +39,8 @@ export class CategoryController {
       }
 
     findAll = (req: Request, res: Response) => {
-      const [, paginationDto] = PaginationDto.create( req.query )
-      
+      const [error, paginationDto] = PaginationDto.create( req.query )
+      if( error ) return res.status(400).json({error});
       this.categoryService.findAll(paginationDto!)
       .then(category => res.json(category))
       .catch(error => res.status(500).json(error))

@@ -1,49 +1,49 @@
 /*import { Request, Response } from "express";
 
-export class ProductController{
+export class ProfessorController{
     
     create = (req:Request, res:Response) => {
-        return res.json ({ message : "Product Create" });
+        return res.json ({ message : "Professor Create" });
     }
     update = (req:Request, res:Response) => {
-        return res.json ({ message : "update Product"});
+        return res.json ({ message : "update Professor"});
     }
     delete = (req:Request, res:Response) => {
-        return res.json ({ message : "Delete Product"});
+        return res.json ({ message : "Delete Professor"});
     }
     findAll = (req:Request, res:Response) => {
-        return res.json ({ message : "Find All Product"});
+        return res.json ({ message : "Find All Professor"});
     }
 
 }*/
 
 import { Request, Response } from "express";
-import { CreateProductDto } from "../../domain/dto/product/create.product.dto";
-import { UpdateProductDto } from "../../domain/dto/product/update.product.dto";
-import { ProductService } from "../services/product.service.ts";
+import { CreateProfessorDto } from "../../domain/dto/professor/create.professor.dto";
+import { UpdateProfessorDto } from "../../domain/dto/professor/update.professor.dto";
+import { ProfessorService } from "../services/professor.service";
 import { Validators } from "../../config/validator";
 import { PaginationDto } from "../../domain/dto/category/paginationdto";
 
 
-export class ProductController {
-  constructor(private readonly productService: ProductService){}
+export class ProfessorController {
+  constructor(private readonly professorService: ProfessorService){}
 
   create = (req: Request, res: Response) => {
-    const [error, createProduct] = CreateProductDto.create(req.body);
+    const [error, createProfessor] = CreateProfessorDto.create(req.body);
     if (error) return res.status(400).json({ error });
-    this.productService.create(createProduct!)
-      .then(product => res.json(product))
+    this.professorService.create(createProfessor!)
+      .then(professor => res.json(professor))
       .catch(error => res.status(500).json(error));
   };
 
     update = (req: Request, res: Response) => {
       const id = req.params.id
       if(!Validators.validationMongoId(id)) throw Error('mongo id is not valid')
-      const [error, updateProductDto] = UpdateProductDto.update(req.body)
+      const [error, updateProfessorDto] = UpdateProfessorDto.update(req.body)
       if( error ) return res.status(400).json({error});
       
-      this.productService.update(updateProductDto!, id!)
-      .then(product => res.json(product))
+      this.professorService.update(updateProfessorDto!, id!)
+      .then(professor => res.json(professor))
       .catch(error => res.status(500).json(error))
 
     }
@@ -52,16 +52,16 @@ export class ProductController {
       const id = req.params.id
       if(!Validators.validationMongoId(id)) throw Error('mongo id is not valid')
       
-        this.productService.delete(id!)
-        .then(product => res.json(product))
+        this.professorService.delete(id!)
+        .then(professor => res.json(professor))
         .catch(error => res.status(500).json(error))
       }
 
     findAll = (req: Request, res: Response) => {
       const [error, paginationDto] = PaginationDto.create( req.query )
       if( error ) return res.status(400).json({error});
-      this.productService.findAll(paginationDto!)
-      .then(product => res.json(product))
+      this.professorService.findAll(paginationDto!)
+      .then(professor => res.json(professor))
       .catch(error => res.status(500).json(error))
     }
 
@@ -70,8 +70,8 @@ export class ProductController {
       const id = req.params.id
       if(!Validators.validationMongoId(id)) throw Error('mongo id is not valid')
       
-        this.productService.findOne(id!)
-        .then(product => res.json(product))
+        this.professorService.findOne(id!)
+        .then(professor => res.json(professor))
         .catch(error => res.status(500).json(error))
     }
   }

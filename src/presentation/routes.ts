@@ -1,11 +1,18 @@
 import { Router } from "express";
-import { ProductRoutes } from "./product/routes";
+import { CategoryRoutes } from "./category/routes";
+import { AuthRoutes } from "./auth/routes";
+import { ProfessorRoutes } from './professor/routes';
 
-export class AppRoute{
+export class AppRoutes{
 
-    static get route():Router{
+    static get routes():Router{
         const routes= Router();
-        routes.use(`api/product`, ProductRoutes.routes);
+        
+        routes.use('/api/auth', AuthRoutes.routes);
+    
+        routes.use('/api/category', CategoryRoutes.routes);
+        routes.use('/api/professor', ProfessorRoutes.routes);
+
 
         return routes;
     }
