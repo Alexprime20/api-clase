@@ -11,7 +11,8 @@ export class CategoryRoutes{
         const categoryServices = new CategoryService();
         const controller = new CategoryController(categoryServices)
 
-        routes.get ('/', controller.create);
+        routes.get ('/', controller.findAll);
+        routes.get ('/:id', controller.findOne);
         routes.put ('/' , controller.update);
         routes.delete ('/' , controller.delete);
         routes.post ('/' , [

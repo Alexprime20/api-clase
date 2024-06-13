@@ -5,6 +5,7 @@ import { UserRegisterDto } from "../../domain/dto/auth/register-user.dto";
 import { UserMaper } from "../../domain/mapers/user.mapers";
 import { UserLoginDto } from "../../domain/dto/auth/login-user.dto";
 import { JwtAdapter } from "../../config/jwt.adapter";
+import { CustomError } from '../../domain/errors/custom.error';
 
 
 
@@ -15,7 +16,7 @@ export class UserService{
         const { email }= userRegisterDto;
        try{
             const exist = await UserModel.findOne({email});
-            if (exist) throw new Error ('user not available!')
+            if (exist) throw CustomError.conflict("User not available!");
             
             const user = await UserModel.create( userRegisterDto )
             if( !user ) throw error('user not registrate!')
@@ -24,7 +25,9 @@ export class UserService{
 
             return UserMaper.fromEntity(user);
         } catch (error) {
-            throw error
+            if( error instanceof CustomError ) throw error;
+
+            throw CustomError.internalServer();
         }
 
     }
@@ -34,7 +37,7 @@ export class UserService{
             const user = await UserModel.findOne({ email });
             if( !user ) throw new Error('credencials not valid!');
 
-            const token = await JwtAdapter.generateToken({ id: user._id});
+            const token = await JwtAdapter.generateToken({ id: user.id});
             if( !token ) throw new Error('token not created!');
             
             return {

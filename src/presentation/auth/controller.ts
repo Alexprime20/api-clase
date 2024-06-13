@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UserRegisterDto } from "../../domain/dto/auth/register-user.dto";
 import { UserService } from "../services/auth.service";
 import { UserLoginDto } from "../../domain/dto/auth/login-user.dto";
+import { HandleError } from '../../domain/errors/handle.error';
 
 
 
@@ -14,15 +15,15 @@ export class UserController {
 
         this.userService.register(userRegisterDto!)
             .then(user => res.json(user))
-            .catch(error => res.status(500).json(error))
+            .catch(error => HandleError.error(error, res))
     }
     login = (req: Request, res: Response) => {
         const [error, userLoginDto] = UserLoginDto.login(req.body);
         if (error) return res.status(400);
 
         this.userService.login(userLoginDto!)
-            .then(register => res.json(register))
-            .catch(error => res.status(500).json(error))
+        .then(login => res.json(login))
+        .catch(error => HandleError.error(error, res))
     }
 
 }

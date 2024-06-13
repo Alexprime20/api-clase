@@ -9,6 +9,6 @@ export class UserLoginDto {
             if (!email) return["email is required", undefined];
             if (!password) return ["password is required", undefined];
     
-        return [undefined, new UserLoginDto(password, email)]
+        return [undefined, new UserLoginDto(email, password)]
     }   
 }

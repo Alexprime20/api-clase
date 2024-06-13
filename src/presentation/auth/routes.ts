@@ -6,8 +6,8 @@ export class AuthRoutes{
 
     static get routes():Router{
         const routes=Router();
-        const categoryServices = new UserService();
-        const controller = new UserController(categoryServices)
+        const userServices = new UserService();
+        const controller = new UserController(userServices)
         
         routes.post ('/register', controller.register);
         routes.post ('/login' , controller.login);

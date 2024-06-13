@@ -1,9 +1,5 @@
 import mongoose from 'mongoose';
-const categorySchema = new mongoose.Schema({
-    id: {
-        type: String,
-        required: [true, 'id is required'],
-    },
+const categorySchema = new mongoose.Schema({    
     name: {
         type: String,
         required: [true, 'name is required'],
